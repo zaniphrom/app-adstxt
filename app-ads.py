@@ -59,14 +59,25 @@ def urlcheck():
             break
     return urlstatus
 
+def bundle_key():
+    """Swap the order to sort by bundle rather than dev URL"""
+    bundle_ordering = []
+    for tps in urlcheck():
+        google_reorder = (tps[1], tps[0], tps[3])
+        apple_reorder = (tps[2], tps[0], tps[3])
+        if google_reorder[0] != "None":
+            bundle_ordering.append(google_reorder)
+        if apple_reorder[0] != "None":
+            bundle_ordering.append(apple_reorder)
+    return(bundle_ordering)
 
 def statuscsv():
     """write the output to this csv file"""
     with open("app-ads-txt.csv", "w", encoding='utf-8') as outfile:
-        for i in urlcheck():
+        for i in bundle_key():
             outfile.write(str(i)[1:-1])
             outfile.write("\n")
         return(outfile)
 
-# print(urlcheck())
-print(statuscsv())
+print(bundle_key())
+# print(statuscsv())

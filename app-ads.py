@@ -137,7 +137,7 @@ def urlcheck():
     for elem in get_bundle_dev_url():
         appads = "https://" + elem[1] + "/app-ads.txt"
         try:
-            x = requests.head(appads, timeout=3.5)
+            x = requests.head(appads, timeout=3.5, allow_redirects=True)
         except requests.exceptions.Timeout:
             status = "Timeout"
         except ConnectionError:
